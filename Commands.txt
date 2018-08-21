@@ -1,0 +1,23 @@
+#Commands 
+
+ws$ roscore
+tb3$ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+ws$ roslaunch turtlebot3_bringup turtlebot3_romote.launch
+
+wb$: rostopic pub cmd_vel geometry_msgs/Twist -r 100 -- '[1.0, 0.0, 0.0]' '[0.0, 0.0, -1]'
+
+ws$ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+tb3$ roslaunch realsense_camera r200_nodelet_default.launch
+ws$ roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+ws$ roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=cartographer
+
+ws$ roslaunch turtlebot3_follow_filter turtlebot3_follow_filter.launch
+ws$ cd ~/catkin_ws/src/turtlebot3_applications/turtlebot3_follower/scripts
+ws$ rosrun turtlebot3_follower follower.py
+
+rostopic pub /move_base_simple/goal geometry_msgs/PoseStamped '{header: {stamp: now, frame_id: "map"}, pose: {position: {x: 0.0, y: 0.0, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.46, w: 0.88}}}'
+
+
+rosrun map_server map_saver -f ~/map
+
